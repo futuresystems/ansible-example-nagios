@@ -6,6 +6,7 @@ export PS4='$LINENO: '
 set -xe
 
 N=5
+venvdir=venv
 
 name=$(basename $PWD)
 
@@ -59,5 +60,15 @@ inventory_group clients ${client_ips}  >>inventory.txt
 
 
 ############################################################ deploy
+
+if [ ! -d $venvdir ]; then
+    virtualenv $venvdir
+    . $venvdir/bin/activate
+    pip install -r requirements.txt
+fi
+
+if [ -z $VIRTUAL_ENV ]; then
+    . $venvdir/bin/activate
+fi
 
 ansible-playbook playbook.yml
