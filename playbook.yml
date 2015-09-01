@@ -1,0 +1,53 @@
+
+
+- hosts: all
+  tasks:
+
+    - name: update apt cache
+      apt:
+        update_cache: yes
+
+- hosts: server
+  roles:
+
+    - role: nagios_server
+
+- hosts: all
+  roles:
+
+    - role: nagios_client
+
+      nagios_client_nagios_server_address:
+        "{{ groups['server'][0] }}"
+
+      nagios_client_commands:
+
+        - name: check_proc_sshd
+          line: /usr/lib/nagios/plugins/check_procs -c 1:30 -C sshd
+
+
+- hosts: server
+  roles:
+
+    - role: nagios_config
+
+      nagios_config_hosts:
+        - name: all
+          nodes: "{{ groups['all'] }}"
+          check_interval: 1
+          check_period: 24x7
+          check_freshness: 1
+          check_command: check_ping!100.0,20%!500.0,60%
+
+      nagios_config_hostgroups:
+
+        - name: all
+          members: "{{ groups['all'] }}"
+
+      nagios_config_services:
+
+        - name: ssh
+          hostgroup_name: all
+          service_description: ssh
+          check_command: check_nrpe!check_proc_sshd
+

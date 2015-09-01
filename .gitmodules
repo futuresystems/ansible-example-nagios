@@ -1,0 +1,9 @@
+[submodule "roles/nagios_server"]
+	path = roles/nagios_server
+	url = https://github.com/futuresystems/ansible-role-nagios-server
+[submodule "roles/nagios_client"]
+	path = roles/nagios_client
+	url = https://github.com/futuresystems/ansible-role-nagios-client
+[submodule "roles/nagios_config"]
+	path = roles/nagios_config
+	url = https://github.com/futuresystems/ansible-role-nagios-config
