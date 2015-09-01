@@ -5,3 +5,14 @@ This repository shows and example deployment of nagios.
 - [[https://github.com/futuresystems/ansible-role-nagios-server][nagios_server]]
 - [[https://github.com/futuresystems/ansible-role-nagios-client][nagios_client]]
 - [[https://github.com/futuresystems/ansible-role-nagios-config][nagios_config]]
+
+
+* Requirements
+
+- Docker
+- ansible
+- jinja2 >= 2.8
+
+* Example
+
+See =run.sh=.
